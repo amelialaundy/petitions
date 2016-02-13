@@ -2,9 +2,10 @@
   "name": "petition-gov-uk",
   "version": "1.0.0",
   "description": "api showing votes from petition.gov.uk",
-  "main": "pp.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./app.js"
   },
   "author": "Amelia Laundy <amelialaundy@gmail.com> (https://github.com/amelialaundy)",
   "license": "MIT",
