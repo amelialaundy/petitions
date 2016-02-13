@@ -1,5 +1,6 @@
 'use strict';
-const defaultBaseApiUrl = 'http://localhost:3000/api/';
+
+const defaultBaseApiUrl = window.location.hostname === 'localhost' ?  'http://localhost:3000/api/': 'http://petition-world.herokuapp.com/api/' ;
 var map;
 var totalVotes;
 
