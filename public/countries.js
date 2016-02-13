@@ -2,6 +2,19 @@
 const defaultBaseApiUrl = 'http://localhost:3000/api/';
 var map;
 var totalVotes;
+
+var addPetitionDetailsToDom = (petitionId) => {
+    var petitionsDetails = JSON.parse(localStorage.petitionsInfo)
+    var petitionDetails = petitionsDetails.filter((petition) => {
+        console.log(petition.id)
+        return petition.id == petitionId;
+    });
+    $('.panel-heading').attr('display', '');
+    $('.panel-title').text(petitionDetails[0].action);
+    $('.panel-body').text(petitionDetails[0].details.details);
+
+};
+
 var formatData = (country) => {
     if (country.code === null) return;
     var formatted = {};
@@ -15,22 +28,41 @@ var formatData = (country) => {
         numberOfVotes : country.signature_count
     };
     map.updateChoropleth(formatted);
+
 };
 
 var getTotalVotes = (previousValue, currentValue) => {
     return previousValue + currentValue.signature_count;
 };
 
-var getMapData = (petitionId) => {
+var applyPetitionsToDom = (petition) => {
+    $('.nav-sidebar').append(`<li class="petition-link" data-id=${petition.id}><a href="#">${petition.action}</a></li>`);
+};
+
+var getMapData = (petitionId, callback) => {
     $.get(`${defaultBaseApiUrl}${petitionId}`)
     .success((petitionData) => {
         petitionData = petitionData.filter((country) => {return country.code !== null;});
         totalVotes = petitionData.reduce(getTotalVotes, 0);
-        console.log(totalVotes);
         petitionData.forEach(formatData);
+        callback(petitionId);
     });
 };
-//map.updateChoropleth(petitionData)
+
+var getListOfPetitions = () => {
+    $.get(`${defaultBaseApiUrl}petitions/all`)
+    .success((petitionsData) => {
+        localStorage.petitionsInfo = JSON.stringify(petitionsData);
+        petitionsData.forEach(applyPetitionsToDom);
+        $('.petition-link').click(function (e){
+            e.preventDefault();
+            var petitionId = $(this).attr('data-id')
+            map.updateChoropleth({});
+            getMapData(petitionId, addPetitionDetailsToDom);
+        });
+    });
+};
+
 $(document).ready(function() {
     map = new Datamap({
         element: document.getElementById('container'),
@@ -54,6 +86,6 @@ $(document).ready(function() {
         }
     });
     map.legend();
-    getMapData(113231);
+    getListOfPetitions();
 });
 
