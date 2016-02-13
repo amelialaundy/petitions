@@ -4,6 +4,7 @@ var app = express();
 const controllers = require('./controllers/controllersIndex.js');
 const path = require('path');
 
+app.set('trust proxy', true);
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
@@ -13,6 +14,7 @@ app.get('/', function (req, res) {
 //api for getting petition by petitionId
 app.get('/api/petitions/all', function (req, res) {
   controllers.petitionController.getAllPetitionData((result) => {
+    result.ipAddress = req.ip;
     res.send(result);
   });
 });

@@ -16,22 +16,28 @@
 <title>Petitions UK</title>
 </head>
 
-<body>
+<body style="font-family: 'Courier New', Courier, monospace;">
   
 
-  <div class="panel panel-default" style="position: inherit;">
+  <div class="panel panel-primary" style="position: inherit;">
     <div class="panel-heading">
-      <h3 class="panel-title">Signatures by country</h3>
+      <h3 class="panel-title" style = "  display: inline;">Signatures by country</h3>
+      <button type="button" class="btn btn-default" style = "float: right">Sign Now</button>
     </div>
     <div style = "height: 600px; overflow: scroll;"class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
       </ul>
     </div>
-    <div class="panel-body" style ="float:right"></div>
+    <div class="panel-body col-md-8" style ="float:left; position:absolute; right: 0;"></div>
   </div>
 
   <div id="container" style="position: absolute; left: 15%; width: 1000px; height: 600px; float: left"></div>
-
+  <footer style="float: left; bottom: 0; position:absolute;">
+    <ol class="breadcrumb">
+      <li style = "margin: auto;">Data from <a href="https://petition.parliament.uk/">petitions.parliament.uk</a></li>
+    </ol>
+    <!-- <div id="acknowledgement"></a> under OGL licence.</div> -->
+  </footer>
 
 </body>
 
