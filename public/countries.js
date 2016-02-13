@@ -1,26 +1,68 @@
 'use strict';
 const defaultBaseApiUrl = 'http://localhost:3000/api/';
 var map;
+var totalVotes;
+
+var addPetitionDetailsToDom = (petitionId) => {
+    var petitionsDetails = JSON.parse(localStorage.petitionsInfo)
+    var petitionDetails = petitionsDetails.filter((petition) => {
+        console.log(petition.id)
+        return petition.id == petitionId;
+    });
+    $('.panel-heading').attr('display', '');
+    $('.panel-title').text(petitionDetails[0].action);
+    $('.panel-body').text(petitionDetails[0].details.details);
+
+};
 
 var formatData = (country) => {
     if (country.code === null) return;
     var formatted = {};
+    var colour = "LOW";
+    var percentile = (country.signature_count / totalVotes) * 100;
+    if (percentile > 6) colour  = "HIGH";
+    if (percentile > 3) colour  = "MEDIUM";
+
     formatted[country.code] = {
-        fillKey: 'LOW',
+        fillKey: colour,
         numberOfVotes : country.signature_count
     };
-    console.log(formatted)
     map.updateChoropleth(formatted);
+
 };
 
-var getMapData = (petitionId) => {
+var getTotalVotes = (previousValue, currentValue) => {
+    return previousValue + currentValue.signature_count;
+};
+
+var applyPetitionsToDom = (petition) => {
+    $('.nav-sidebar').append(`<li class="petition-link" data-id=${petition.id}><a href="#">${petition.action}</a></li>`);
+};
+
+var getMapData = (petitionId, callback) => {
     $.get(`${defaultBaseApiUrl}${petitionId}`)
     .success((petitionData) => {
-        petitionData.filter((country) => {return country.code !== null;}).forEach(formatData);
-        
+        petitionData = petitionData.filter((country) => {return country.code !== null;});
+        totalVotes = petitionData.reduce(getTotalVotes, 0);
+        petitionData.forEach(formatData);
+        callback(petitionId);
     });
 };
-//map.updateChoropleth(petitionData)
+
+var getListOfPetitions = () => {
+    $.get(`${defaultBaseApiUrl}petitions/all`)
+    .success((petitionsData) => {
+        localStorage.petitionsInfo = JSON.stringify(petitionsData);
+        petitionsData.forEach(applyPetitionsToDom);
+        $('.petition-link').click(function (e){
+            e.preventDefault();
+            var petitionId = $(this).attr('data-id')
+            map.updateChoropleth({});
+            getMapData(petitionId, addPetitionDetailsToDom);
+        });
+    });
+};
+
 $(document).ready(function() {
     map = new Datamap({
         element: document.getElementById('container'),
@@ -31,16 +73,7 @@ $(document).ready(function() {
             UNKNOWN: 'rgb(0,0,0)',
             defaultFill: 'green'
         },
-        data: {
-            IRL: {
-                fillKey: 'LOW',
-                numberOfThings: 2002
-            },
-            USA: {
-                fillKey: 'MEDIUM',
-                numberOfThings: 10381
-            }
-        },
+        data: {},
         geographyConfig: {
             popupTemplate: function(geo, data) {
                 if (data) {
@@ -53,6 +86,6 @@ $(document).ready(function() {
         }
     });
     map.legend();
-    getMapData(113231);
+    getListOfPetitions();
 });
 

@@ -1,25 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <!-- I recommend you host this file on your own, since this will change without warning -->
   <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
   <script src="./countries.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-<title>Title of the document</title>
+<title>Petitions UK</title>
 </head>
 
 <body>
-<div id="container" style="position: relative; width: 1000px; height: 600px;"></div>
-<script>
+  
 
-   
+  <div class="panel panel-default" style="position: inherit;">
+    <div class="panel-heading">
+      <h3 class="panel-title">Signatures by country</h3>
+    </div>
+    <div style = "height: 600px; overflow: scroll;"class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+      </ul>
+    </div>
+    <div class="panel-body" style ="float:right"></div>
+  </div>
 
-    //draw a legend for this map
-</script>
+  <div id="container" style="position: absolute; left: 15%; width: 1000px; height: 600px; float: left"></div>
+
+
 </body>
 
 </html>
