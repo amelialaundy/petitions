@@ -12,5 +12,8 @@
   "dependencies": {
     "country-data": "0.0.24",
     "express": "^4.13.4"
+  },
+  "engines": {
+    "node": "5.2.0"
   }
 }
