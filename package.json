@@ -5,13 +5,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack ./public/countries.js ./public/countries.bundle.js & node ./app"
+    "start": "webpack ./public/countries.js ./countries.bundle.js & node ./app"
   },
   "author": "Amelia Laundy <amelialaundy@gmail.com> (https://github.com/amelialaundy)",
   "license": "MIT",
   "dependencies": {
     "country-data": "0.0.24",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "webpack": "^1.13.0"
   },
   "engines": {
     "node": "5.2.0"
