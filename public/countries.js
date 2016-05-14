@@ -7,7 +7,6 @@ var totalVotes;
 var addPetitionDetailsToDom = (petitionId) => {
     var petitionsDetails = JSON.parse(localStorage.petitionsInfo)
     var petitionDetails = petitionsDetails.filter((petition) => {
-        console.log(petition.id)
         return petition.id == petitionId;
     });
     $('.panel-heading').attr('display', '');
