@@ -1,1 +1,1 @@
-web: babel public/countries.js --out-file ./public/script-compiled.js & node ./app
+web: ./node_modules/.bin/babel public/countries.js --out-file ./public/script-compiled.js & node ./app
